@@ -1,0 +1,5 @@
+--ui bdd
+--recursive
+--check-leaks
+--globals sinon,expect,request
+--require test.js

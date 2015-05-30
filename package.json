@@ -1,0 +1,37 @@
+{
+  "name": "node-plugger",
+  "version": "0.1.0-beta",
+  "description": "Javascript Next plugin container",
+  "main": "index.js",
+  "dependencies": {
+    "bluebird": "^2.9.25"
+  },
+  "devDependencies": {
+    "chai": "^2.3.0",
+    "chai-as-promised": "^5.0.0",
+    "mocha": "^2.2.5",
+    "sinon": "^1.14.1",
+    "sinon-chai": "^2.7.0"
+  },
+  "scripts": {
+    "test": "node --harmony test",
+    "start": "node --harmony examples/abc"
+  },
+  "keywords": [
+    "plugin",
+    "app",
+    "application",
+    "module",
+    "container",
+    "dependency",
+    "manager",
+    "management",
+    "es6",
+    "ecmascript6",
+    "next",
+    "promise",
+    "generators"
+  ],
+  "author": "Aldwin \"Avaq\" Vlasblom <aldwin.vlasblom@gmail.com> (https://github.com/Avaq)",
+  "license": "MIT"
+}
