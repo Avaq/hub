@@ -120,6 +120,13 @@ describe("Plugin", function(){
       expect(plugin.end.bind(plugin)).to.throw(Error);
     });
 
+    it("should noop when no end method exists", function(done){
+      var plugin = new Plugin(app, {start:function(){}});
+      plugin.start().then(function(){
+        return plugin.end();
+      }).nodeify(done);
+    });
+
     it("should call descriptor.end", function(done){
       plugin.end().then(function(){
         expect(plugin.descriptor.end).to.have.been.calledWith(app);
@@ -138,7 +145,30 @@ describe("Plugin", function(){
       this.timeout(20);
       plugin.on('end', done);
       plugin.end();
-    })
+    });
+
+    it("should become active when an error is encountered", function(done){
+      var plugin = new Plugin(app, {start:function(){},end:function(){throw new Error("Kaputt!")}});
+      plugin.start()
+      .then(function(){
+        return plugin.end();
+      })
+      .then(function(){
+        done(new Error("No error was encountered!"));
+      })
+      .catch(function(err){
+        expect(err.message).to.equal('Kaputt!');
+        expect(plugin.state).to.equal(Plugin.ACTIVE);
+      })
+      .nodeify(done);
+    });
+
+    it("should emit fail when an error is encountered", function(done){
+      var plugin = new Plugin(app, {start:function(){},end:function(){throw new Error("Kaputt!")}});
+      this.timeout(20);
+      plugin.once('fail', done.bind(null, null));
+      plugin.start().then(function(){return plugin.end()}).catch(function(err){});
+    });
 
   });
 
