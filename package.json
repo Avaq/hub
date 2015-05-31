@@ -9,12 +9,16 @@
   "devDependencies": {
     "chai": "^2.3.0",
     "chai-as-promised": "^5.0.0",
+    "isparta": "^3.0.3",
+    "istanbul": "^0.3.14",
+    "karma": "^0.12.35",
+    "karma-coverage": "douglasduteil/karma-coverage#next",
     "mocha": "^2.2.5",
     "sinon": "^1.14.1",
     "sinon-chai": "^2.7.0"
   },
   "scripts": {
-    "test": "node --harmony test",
+    "test": "node --harmony node_modules/.bin/isparta cover --report text --report html test",
     "start": "node --harmony examples/abc"
   },
   "keywords": [
