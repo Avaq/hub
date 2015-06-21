@@ -32,7 +32,7 @@ class App {
     options && Object.keys(defaults).forEach(function(key){
       options[key] = options[key] || defaults[key];
     });
-  };
+  }
 
   /**
    * Register a plugin by path.
@@ -47,7 +47,7 @@ class App {
    */
   use(name){
     return this.register(require(this.resolvePluginPath(name)));
-  };
+  }
 
   /**
    * Register the given plugin descriptor with this plugin container.
@@ -81,7 +81,7 @@ class App {
 
     return plugin;
 
-  };
+  }
 
   /**
    * Determine whether the given plugin is registerred on this container.
@@ -92,7 +92,7 @@ class App {
    */
   isRegistered(descriptor){
     return this._plugins.has(descriptor);
-  };
+  }
 
   /**
    * Await the initialization of one or more plugins.
@@ -126,7 +126,7 @@ class App {
 
     });
 
-  };
+  }
 
   /**
    * Determine when the plugin described by the given descriptor has loaded.
@@ -167,7 +167,7 @@ class App {
 
     });
 
-  };
+  }
 
   /**
    * Resolve the given plugin name to its full path.
@@ -182,7 +182,7 @@ class App {
 
     return path.resolve(this._options.pluginDirectory, name);
 
-  };
+  }
 
   /**
    * Start the app by starting all registerred plugins.
@@ -234,7 +234,7 @@ class App {
 
     });
 
-  };
+  }
 
   /**
    * End the app by ending all the plugins.
@@ -248,7 +248,7 @@ class App {
       return plugin.end();
     });
 
-  };
+  }
 
 };
 

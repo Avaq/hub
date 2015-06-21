@@ -12,7 +12,7 @@ util = module.exports = exports = Object.create(util);
  * @return {Boolean}
  */
 util.isGenerator = function(fn){
-  return fn.constructor.name === 'GeneratorFunction';
+  return typeof fn === 'function' && fn.constructor.name === 'GeneratorFunction';
 };
 
 /**
