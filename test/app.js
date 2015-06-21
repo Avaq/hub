@@ -1,6 +1,9 @@
 var App = require('../src/app');
 var Plugin = require('../src/plugin');
 
+//Test util first
+require('./util');
+
 describe("App", function(){
 
   it("should construct with no arguments", function(){
