@@ -125,6 +125,29 @@ describe("App", function(){
 
   });
 
+  describe("#await()", function(){
+
+    var opts = {pluginDirectory: path.resolve(__dirname, 'plugins')};
+
+    it("should reject for unregisterred plugins", function(done){
+      var app = new App(opts);
+      expect(app.await('test')).to.be.rejectedWith(
+        "A plugin is depending on test, which is not being used."
+      ).notify(done);
+    });
+
+    it("should call getPromiseFor for every plugin", function(done){
+      var app = new App(opts);
+      var plugin = app.use('test');
+      app.getPromiseFor = sinon.stub().returns(Promise.resolve());
+      app.await('test').then(function(){
+        expect(app.getPromiseFor).to.have.been.calledWith(plugin.descriptor);
+      })
+      .nodeify(done);
+    });
+
+  });
+
   // it.skip("What?", function(){
 
   //   app.use('b').then(function(){console.log('B loaded')});

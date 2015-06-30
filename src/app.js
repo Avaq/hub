@@ -118,7 +118,7 @@ class App {
 
       //Throw if the dependency is not met.
       if(!app.isRegistered(descriptor)){
-        throw new Error("Failed to meet a dependency for " + name);
+        throw new Error("A plugin is depending on " + name + ", which is not being used.");
       }
 
       //Get a promise for this descriptor.
