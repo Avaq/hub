@@ -205,7 +205,7 @@ class App {
     var promises = [];
 
     //Set a default timeout?
-    if(arguments.length === 0) timeout = 30000;
+    if(arguments.length === 0 || timeout == null) timeout = 30000;
 
     //Call start for every plugin.
     for(let plugin of app._plugins.values()){
@@ -227,7 +227,7 @@ class App {
         "Application startup timed out. This can happen if a deadlock is" +
         "created by several plugins all awaiting eachother in a circle." +
         ""
-      )), timeout||30000);
+      )), timeout);
 
       //Await the resolution of all startup promises.
       Promise.all(promises).tap(clearTimeout.bind(null, tid)).done(resolve, reject);

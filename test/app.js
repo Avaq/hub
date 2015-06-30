@@ -148,6 +148,43 @@ describe("App", function(){
 
   });
 
+  describe("#start()", function(){
+
+    it("should return a promise", function(){
+      var app = new App;
+      expect(app.start()).to.be.an.instanceof(Promise);
+    });
+
+    it("should call every Plugin#start method", function(done){
+      var app = new App;
+      var spies = [sinon.spy(), sinon.spy()];
+      app.register({start: spies[0]});
+      app.register({start: spies[1]});
+      app.start(Infinity).then(function(){
+        expect(spies[0]).to.have.been.called;
+        expect(spies[1]).to.have.been.called;
+      })
+      .nodeify(done);
+    });
+
+    it("should reject if the timeout is reached", function(done){
+      var app = new App;
+      app.register({start: function(){return Promise.delay(1000)}});
+      expect(app.start(20)).to.be.rejectedWith(/timed out/).notify(done);
+    });
+
+    it("should keep track of started plugins", function(done){
+      var app = new App;
+      var plugin = app.register({start: function(){}});
+      app.start(null).then(function(){
+        expect(app._started).to.be.an('array');
+        expect(app._started).to.include(plugin);
+      })
+      .nodeify(done);
+    });
+
+  });
+
   // it.skip("What?", function(){
 
   //   app.use('b').then(function(){console.log('B loaded')});
