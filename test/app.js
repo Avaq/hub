@@ -112,7 +112,7 @@ describe("App", function(){
       var descriptor = {start: function(){throw new Error("Rejected")}};
       var plugin = app.register(descriptor);
       expect(app.getPromiseFor(descriptor)).to.be.rejected.notify(done);
-      plugin.start();
+      plugin.start().catch(function(err){/*swallow*/});
     });
 
     it("should resolve when the plugin activates", function(done){
