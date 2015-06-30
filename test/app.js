@@ -185,25 +185,4 @@ describe("App", function(){
 
   });
 
-  // it.skip("What?", function(){
-
-  //   app.use('b').then(function(){console.log('B loaded')});
-  //   app.use('c').then(function(){console.log('C loaded')});
-  //   app.use('a').then(function(){console.log('A loaded')});
-
-  //   app.init()
-
-  //   .then(function(){
-  //     console.log('All loaded');
-  //     console.log(app);
-  //   })
-
-  //   .catch(function(err){
-  //     console.error("App failed to load.");
-  //     console.error(err.stack);
-  //     process.exit(1);
-  //   });
-
-  // });
-
 });
