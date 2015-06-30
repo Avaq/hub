@@ -1,5 +1,6 @@
 var App = require('../src/app');
 var Plugin = require('../src/plugin');
+var path = require('path');
 
 //Test util first
 require('./util');
@@ -8,6 +9,11 @@ describe("App", function(){
 
   it("should construct with no arguments", function(){
     var app = new App;
+    expect(app).to.be.an.instanceof(App);
+  });
+
+  it("should construct with empty options", function(){
+    var app = new App({});
     expect(app).to.be.an.instanceof(App);
   });
 
@@ -52,6 +58,25 @@ describe("App", function(){
 
     it("should not create a new plugin for an already registered descriptor", function(){
       expect(app.register(descriptor)).to.equal(plugin);
+    });
+
+  });
+
+  describe("#use()", function(){
+
+    var app = new App({pluginDirectory: path.resolve(__dirname, 'plugins')});
+
+    before("stubbing register", function(){
+      sinon.stub(app, 'register');
+    });
+
+    after("restoring register", function(){
+      app.register.restore();
+    });
+
+    it("should call register with the resolved name", function(){
+      app.use("test");
+      expect(app.register).to.have.been.calledWith(require('./plugins/test'));
     });
 
   });
