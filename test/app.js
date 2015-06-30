@@ -185,4 +185,20 @@ describe("App", function(){
 
   });
 
+  describe("#end()", function(){
+
+    it("should call every Plugins#end method", function(done){
+      var app = new App;
+      var spies = [sinon.spy(), sinon.spy()];
+      app.register({start: function(){}, end: spies[0]});
+      app.register({start: function(){}, end: spies[1]});
+      app.start(Infinity).then(app.end.bind(app)).then(function(){
+        expect(spies[0]).to.have.been.called;
+        expect(spies[1]).to.have.been.called;
+      })
+      .nodeify(done);
+    });
+
+  });
+
 });
