@@ -81,6 +81,50 @@ describe("App", function(){
 
   });
 
+  describe("#getPromiseFor()", function(){
+
+    it("should reject for unregisterred descriptors", function(done){
+      var app = new App;
+      var descriptor = {start: function(){}};
+      expect(app.getPromiseFor(descriptor)).to.be.rejectedWith(
+        "No plugin registered for given descriptor."
+      ).notify(done);
+    });
+
+    it("should return a rejected promise for failed plugins", function(done){
+      var app = new App;
+      var descriptor = {start: function(){}};
+      var plugin = app.register(descriptor);
+      plugin.state = Plugin.FAILED;
+      expect(app.getPromiseFor(descriptor)).to.be.rejected.notify(done);
+    });
+
+    it("should return a resolved promise for active plugins", function(done){
+      var app = new App;
+      var descriptor = {start: function(){}};
+      var plugin = app.register(descriptor);
+      plugin.state = Plugin.ACTIVE;
+      expect(app.getPromiseFor(descriptor)).to.be.fulfilled.notify(done);
+    });
+
+    it("should reject when the plugin fails", function(done){
+      var app = new App;
+      var descriptor = {start: function(){throw new Error("Rejected")}};
+      var plugin = app.register(descriptor);
+      expect(app.getPromiseFor(descriptor)).to.be.rejected.notify(done);
+      plugin.start();
+    });
+
+    it("should resolve when the plugin activates", function(done){
+      var app = new App;
+      var descriptor = {start: function(){}};
+      var plugin = app.register(descriptor);
+      expect(app.getPromiseFor(descriptor)).to.be.fulfilled.notify(done);
+      plugin.start();
+    });
+
+  });
+
   // it.skip("What?", function(){
 
   //   app.use('b').then(function(){console.log('B loaded')});

@@ -1,7 +1,7 @@
 "use strict";
 var Promise = require('bluebird');
 var path = require('path');
-var Plugin = require('./plugin')
+var Plugin = require('./plugin');
 
 //Default options.
 var defaults = {
