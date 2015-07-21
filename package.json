@@ -1,20 +1,25 @@
 {
-  "name": "node-plugger",
-  "version": "0.1.0-beta",
-  "description": "Javascript Next plugin container",
-  "main": "index.js",
+  "name": "@avaq/hub",
+  "version": "1.0.0",
+  "description": "Slim Javascript application service manager",
+  "main": "src/app.js",
+  "repository": "avaq/hub",
   "dependencies": {
-    "bluebird": "^2.9.25"
+    "bluebird": "^2.9.33"
   },
   "devDependencies": {
-    "chai": "^2.3.0",
-    "chai-as-promised": "^5.0.0",
+    "chai": "^3.0.0",
+    "chai-as-promised": "^5.1.0",
+    "isparta": "^3.0.3",
+    "istanbul": "^0.3.17",
+    "karma": "^0.12.37",
+    "karma-coverage": "^0.4.2",
     "mocha": "^2.2.5",
-    "sinon": "^1.14.1",
-    "sinon-chai": "^2.7.0"
+    "sinon": "^1.15.4",
+    "sinon-chai": "^2.8.0"
   },
   "scripts": {
-    "test": "node --harmony test",
+    "test": "node --harmony node_modules/.bin/isparta cover --config istanbul.json --report text --report html test",
     "start": "node --harmony examples/abc"
   },
   "keywords": [
@@ -26,11 +31,8 @@
     "dependency",
     "manager",
     "management",
-    "es6",
-    "ecmascript6",
-    "next",
     "promise",
-    "generators"
+    "generator"
   ],
   "author": "Aldwin \"Avaq\" Vlasblom <aldwin.vlasblom@gmail.com> (https://github.com/Avaq)",
   "license": "MIT"

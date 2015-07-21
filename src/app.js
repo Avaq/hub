@@ -1,7 +1,7 @@
 "use strict";
 var Promise = require('bluebird');
 var path = require('path');
-var Plugin = require('./plugin')
+var Plugin = require('./plugin');
 
 //Default options.
 var defaults = {
@@ -32,7 +32,7 @@ class App {
     options && Object.keys(defaults).forEach(function(key){
       options[key] = options[key] || defaults[key];
     });
-  };
+  }
 
   /**
    * Register a plugin by path.
@@ -47,7 +47,7 @@ class App {
    */
   use(name){
     return this.register(require(this.resolvePluginPath(name)));
-  };
+  }
 
   /**
    * Register the given plugin descriptor with this plugin container.
@@ -81,7 +81,7 @@ class App {
 
     return plugin;
 
-  };
+  }
 
   /**
    * Determine whether the given plugin is registerred on this container.
@@ -92,7 +92,7 @@ class App {
    */
   isRegistered(descriptor){
     return this._plugins.has(descriptor);
-  };
+  }
 
   /**
    * Await the initialization of one or more plugins.
@@ -118,7 +118,7 @@ class App {
 
       //Throw if the dependency is not met.
       if(!app.isRegistered(descriptor)){
-        throw new Error("Failed to meet a dependency for " + name);
+        throw new Error("A plugin is depending on " + name + ", which is not being used.");
       }
 
       //Get a promise for this descriptor.
@@ -126,7 +126,7 @@ class App {
 
     });
 
-  };
+  }
 
   /**
    * Determine when the plugin described by the given descriptor has loaded.
@@ -167,7 +167,7 @@ class App {
 
     });
 
-  };
+  }
 
   /**
    * Resolve the given plugin name to its full path.
@@ -182,7 +182,7 @@ class App {
 
     return path.resolve(this._options.pluginDirectory, name);
 
-  };
+  }
 
   /**
    * Start the app by starting all registerred plugins.
@@ -205,7 +205,7 @@ class App {
     var promises = [];
 
     //Set a default timeout?
-    if(arguments.length === 0) timeout = 30000;
+    if(arguments.length === 0 || timeout == null) timeout = 30000;
 
     //Call start for every plugin.
     for(let plugin of app._plugins.values()){
@@ -227,14 +227,14 @@ class App {
         "Application startup timed out. This can happen if a deadlock is" +
         "created by several plugins all awaiting eachother in a circle." +
         ""
-      )), timeout||30000);
+      )), timeout);
 
       //Await the resolution of all startup promises.
       Promise.all(promises).tap(clearTimeout.bind(null, tid)).done(resolve, reject);
 
     });
 
-  };
+  }
 
   /**
    * End the app by ending all the plugins.
@@ -248,7 +248,7 @@ class App {
       return plugin.end();
     });
 
-  };
+  }
 
 };
 
