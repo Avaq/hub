@@ -1,4 +1,4 @@
-# Hub - Version 0.1.0 Beta
+# Hub - Version 1.0.0
 
 Slim Javascript application service manager. Similar to the old
 [Broadway](https://github.com/indexzero/broadway/tree/v0.3.6) but with more

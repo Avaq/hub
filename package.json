@@ -1,6 +1,6 @@
 {
   "name": "@avaq/hub",
-  "version": "0.1.0-beta",
+  "version": "1.0.0",
   "description": "Slim Javascript application service manager",
   "main": "src/app.js",
   "repository": "avaq/hub",
